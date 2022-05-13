@@ -1,21 +1,19 @@
 const { Recipe, Diet } = require("../db.js");
 const axios = require("axios");
-const db = require("../db.js");
-const apiKey = "c7455b854ded44eab1a19b368e2df2a8";
-const Sequelize = require("sequelize");
-const Op = Sequelize.Op;
-
+const {
+  API_KEY
+} = process.env;
 const getAllrecipes = async (req, res, next) => {
   try {
     const api = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&addRecipeInformation=true&number=100`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`
     );
     const db = await Recipe.findAll({ include: Diet });
     if (api || db) {
       let apiResponse = api.data.results
         ?.map((recipe) => {
           return {
-            name: recipe.title,
+            title: recipe.title,
             summary: recipe.summary,
             spoonacularScore: recipe.spoonacularScore,
             healthScore: recipe.healthScore,
@@ -29,55 +27,87 @@ const getAllrecipes = async (req, res, next) => {
             dishTypes: recipe.dishTypes.join(),
           };
         })
+        
       let wholeResponse = [...apiResponse, db];
       res.send(wholeResponse);
     }
   } catch (error) {
     console.error(error);
-  }
-  next();
+  };
 };
 
 const getRecipeByName = async (req, res) => {
   const { name } = req.query;
   try {
     const api = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${apiKey}&addRecipeInformation=true&number=100`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`
     );
     const db = await Recipe.findAll({
       where: {
-        name: {
-          [Op.like]: `%${name}%`,
-        },
+        name: name
       },
     });
     if (api || db) {
-      let apiResponse = api.data.results
-        ?.filter((recipe) => {
+      let apiResponse = api.data.results?.filter((recipe) => {
           if (recipe.title.toLowerCase().includes(`${name.toLowerCase()}`))
-            return {
-              recipe,
-            }
-        })
-        .map((recipe) => {
+            return recipe
+        }).map((recipe) => {
           return {
             image: recipe.image,
-            name: recipe.title,
+            title: recipe.title,
             diets: recipe.diets.join(),
             spoonacularScore: recipe.spoonacularScore,
             healthScore: recipe.healthScore,
           };
         });
+        console.log(apiResponse)
       let wholeResponse = [...apiResponse, db];
       res.send(wholeResponse);
     } 
   } catch (error) {
-    console.error(
-      `It seems there's no recipe yet, you might like to become a Chef and add a new recipe for all the folks out there 👨‍🍳👩‍🍳`
-    );
+    console.error(error);
   }
+};
+const getRecipeById = async (req, res, next) => {
+  const {id} = req.params
+  try {
+    const api = await axios.get(
+      `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
+    );
+    const {data} = api
+    const db = await Recipe.findAll({ where: {
+    id: id,} , include: Diet });
+    if (api || db) {
+      let apiResponse = (() => {
+          return {
+            image: data.image,
+            title: data.title,
+            dishTypes: data.dishTypes.join(),
+            diets: data.diets.join(),
+            summary: data.summary,
+            spoonacularScore: data.spoonacularScore,
+            healthScore: data.healthScore,
+            analyzedInstructions: data.analyzedInstructions[0]?.steps
+              .map((step) => {
+                return `${step.number}.  ${step.step}`;
+              })
+              .join(),
+          };
+        })(data);
+      let wholeResponse = [apiResponse];
+      res.send(wholeResponse);
+    }
+  } catch (error) {
+    console.error(error);
+  };
 };
 module.exports = {
   getAllrecipes,
   getRecipeByName,
+  getRecipeById
 };
+// [ ] Los campos mostrados en la ruta principal para cada receta (imagen, nombre, tipo de plato y tipo de dieta)
+// [ ] Resumen del plato
+// [ ] Puntuación
+// [ ] Nivel de "comida saludable"
+// [ ] Paso a paso
