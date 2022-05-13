@@ -1,15 +1,17 @@
 const { Router } = require('express');
+const { createRecipe } = require('../controllers/createRecipeController');
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
 
-const createRecipe = Router();
+const createRecipeRouter = Router();
 
 // Configurar los routers
+createRecipeRouter.use('/', createRecipe)
 // Ejemplo: router.use('/auth', authRouter);
 
 
-module.exports = createRecipe;
+module.exports = createRecipeRouter;
 
 // [ ] POST /recipe:
 // Recibe los datos recolectados desde el formulario controlado de la ruta de creación de recetas por body
