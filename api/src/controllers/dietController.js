@@ -26,7 +26,7 @@ const getTypes = async (req, res) => {
           });
         });
       apiResponseTypes.forEach(async (e) => {
-        await Diet.findOrCreate({
+      let [typeCreated,succeful] = await Diet.findOrCreate({
           where: {
             name: e
               .split(" ")
