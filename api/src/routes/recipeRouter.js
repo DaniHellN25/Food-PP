@@ -5,7 +5,7 @@ const recipeRouter = Router();
 
 // Configurar los routers
 
-recipeRouter.get('/getRecipes', getAllrecipes)
+recipeRouter.get('/', getAllrecipes)
 recipeRouter.get('/', getRecipeByName)
 recipeRouter.get('/:id', getRecipeById)
 // Ejemplo: router.use('/auth', authRouter);

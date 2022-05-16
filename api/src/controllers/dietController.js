@@ -4,7 +4,7 @@ const {
   API_KEY
 } = process.env;
 
-
+//mapeo todos los resultaos de la busqueda para obtener solo los tipo de dieta de cada uno, obtengo un arreglo de objetos y por cada  elemento en la propiedad diets checo si estan en mi var para pushearlos. Ya filtradas solo queda checar si estan en la BD o crearlos
 const getTypes = async (req, res) => {
   try {
     const api = await axios.get(
@@ -42,6 +42,7 @@ const getTypes = async (req, res) => {
     console.error(`Nothing to see here 🕵️‍♂️`);
   }
 };
+//Creo la base de datos para Diets, cuando se levanta el back se crean usando la función en el index
 const createInitialTypes =async () => {
   await Diet.bulkCreate([
     { name: 'Gluten Free' ,

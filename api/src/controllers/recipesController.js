@@ -2,7 +2,8 @@ const { Recipe, Diet } = require("../db.js");
 const axios = require("axios");
 const { API_KEY } = process.env;
 const { Op } = require("sequelize")
-const getAllrecipes = async (req, res,) => {
+const getAllrecipes = async (req, res, next) => {
+  if (req.query.name) return next();
   try {
     const api = await axios.get(
       `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`
@@ -11,18 +12,13 @@ const getAllrecipes = async (req, res,) => {
     if (api || db) {
       let apiResponse = api.data.results?.map((recipe) => {
         return {
+          image: recipe.image,
           title: recipe.title,
+          diets: recipe.diets,
+          dishTypes: recipe.dishTypes.join(),
           summary: recipe.summary,
           spoonacularScore: recipe.spoonacularScore,
           healthScore: recipe.healthScore,
-          image: recipe.image,
-          analyzedInstructions: recipe.analyzedInstructions[0]?.steps
-            .map((step) => {
-              return `${step.number}.  ${step.step}`;
-            })
-            .join(),
-          diets: recipe.diets.join(),
-          dishTypes: recipe.dishTypes.join(),
         };
       });
 
@@ -49,9 +45,10 @@ const getRecipeByName = async (req, res) => {
       where: {
         title: {[Op.substring]: lower,}
       },
+      include: Diet
     });
     if (api || db) {
-      let apiResponse = api.data.results.filter((recipe) => {
+      let apiResponse = api.data.results?.filter((recipe) => {
           if (recipe.title.toLowerCase().includes(`${name.toLowerCase()}`))
             return recipe;
         })
@@ -65,8 +62,7 @@ const getRecipeByName = async (req, res) => {
           };
         });
       let wholeResponse = [...apiResponse, ...db];
-      console.log(wholeResponse.length)
-      if(wholeResponse.length > 0) return res.send(wholeResponse);
+       return res.send(wholeResponse);
     }
   } catch (error) {
     return res
