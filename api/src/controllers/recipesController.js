@@ -34,7 +34,7 @@ const getAllrecipes = async (req, res, next) => {
       );
   }
 };
-//You need to fix to get error when the query is not found
+
 const getRecipeByName = async (req, res, next) => {
   const { name } = req.query;
   const lowerCaseQueryName = name.toLowerCase();
@@ -129,7 +129,7 @@ const getRecipeById = async (req, res, next) => {
       return res.send(apiResponse);
     } else {
       res.send(
-        `Invalid ID for Search 😅, we suggest you to try with numbers for Spoonaculars 🧐 recipes or with UUID format for created recipes. Here,  have a cupcake meanwhile 🧁.`
+        `Invalid ID request 😅, we suggest you to try with numbers for Spoonacular's recipes 🧐 or with UUID format for created recipes. Here,  have a cupcake meanwhile 🧁.`
       );
     }
   } catch (error) {
