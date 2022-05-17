@@ -1,7 +1,7 @@
 const { Recipe, Diet } = require("../db.js");
 const axios = require("axios");
 const { API_KEY } = process.env;
-const { Op } = require("sequelize")
+const { Op } = require("sequelize");
 const getAllrecipes = async (req, res, next) => {
   if (req.query.name) return next();
   try {
@@ -12,9 +12,10 @@ const getAllrecipes = async (req, res, next) => {
     if (api || db) {
       let apiResponse = api.data.results?.map((recipe) => {
         return {
+          id: recipe.id,
           image: recipe.image,
           title: recipe.title,
-          diets: recipe.diets,
+          diets: recipe.diets.join(),
           dishTypes: recipe.dishTypes.join(),
           summary: recipe.summary,
           spoonacularScore: recipe.spoonacularScore,
@@ -27,29 +28,38 @@ const getAllrecipes = async (req, res, next) => {
     }
   } catch (error) {
     return res
-    .status(404)
-    .send(
-      `We might have a problem in the kitchen  👩‍🍳👨‍🍳, we offer you our most sincere apologies.  We like you, have a cupcake🧁`
-    );
+      .status(404)
+      .send(
+        `We might have a problem in the kitchen  👩‍🍳👨‍🍳, we offer you our most sincere apologies.  We like you, have a cupcake🧁`
+      );
   }
 };
 //You need to fix to get error when the query is not found
-const getRecipeByName = async (req, res) => {
+const getRecipeByName = async (req, res, next) => {
   const { name } = req.query;
-  const lower = name.toLowerCase()
+  const lowerCaseQueryName = name.toLowerCase();
   try {
     const api = await axios.get(
       `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`
     );
     const db = await Recipe.findAll({
       where: {
-        title: {[Op.substring]: lower,}
+        title: {
+          [Op.or]: {
+            [Op.eq]: lowerCaseQueryName,
+            [Op.substring]: lowerCaseQueryName,
+          },
+        },
       },
-      include: Diet
+      include: Diet,
     });
     if (api || db) {
-      let apiResponse = api.data.results?.filter((recipe) => {
-          if (recipe.title.toLowerCase().includes(`${name.toLowerCase()}`))
+      let apiResponse = api.data.results
+        ?.filter((recipe) => {
+          if (
+            recipe.title.toLowerCase() === lowerCaseQueryName ||
+            recipe.title.toLowerCase().includes(lowerCaseQueryName)
+          )
             return recipe;
         })
         .map((recipe) => {
@@ -61,33 +71,41 @@ const getRecipeByName = async (req, res) => {
             healthScore: recipe.healthScore,
           };
         });
-      let wholeResponse = [...apiResponse, ...db];
-       return res.send(wholeResponse);
+      if (!apiResponse.length && !db.length)
+        return res
+          .status(404)
+          .send(
+            `It seems we don't have recipes that meets your expectations, you may want to become a Chef and create it for all the folks out there 😉👩‍🍳👨‍🍳`
+          );
+      else {
+        let wholeResponse = [...apiResponse, ...db];
+        return res.send(wholeResponse);
+      }
     }
   } catch (error) {
-    return res
-    .status(404)
-    .send(
-      `It seems we don't have recipes that meets your expectations, you may want to become a Chef and create it for all the folks out there 😉👩‍🍳👨‍🍳`
-    );
+    next(error);
   }
 };
 //id for testing(716426)
-const getRecipeById = async (req, res, ) => {
+const getRecipeById = async (req, res, next) => {
   const { id } = req.params;
-  const regexExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
+  const regexExpUUID =
+    /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi;
+  const regexExpNum = (num) => /^\d+$/.test(num);
   try {
-    if (
-      regexExp.test(id)
-    ) {
+    if (regexExpUUID.test(id)) {
       const db = await Recipe.findAll({
         where: {
           id: id,
         },
         include: Diet,
       });
-      return res.send(db);
-    } else {
+      db.length
+        ? res.send(db)
+        : res.send(
+            `It seems we don't have that recipe yet... But you may want to become a Chef and create it for all the folks out there 😉👩‍🍳👨‍🍳`
+          );
+    } else if (regexExpNum(id)) {
       const api = await axios.get(
         `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
       );
@@ -109,14 +127,13 @@ const getRecipeById = async (req, res, ) => {
         };
       })(data);
       return res.send(apiResponse);
+    } else {
+      res.send(
+        `Invalid ID for Search 😅, we suggest you to try with numbers for Spoonaculars 🧐 recipes or with UUID format for created recipes. Here,  have a cupcake meanwhile 🧁.`
+      );
     }
   } catch (error) {
-    // return res
-    //   .status(404)
-    //   .send(
-    //     `It seems we don't have that recipe yet... But you may want to become a Chef and create it for all the folks out there 😉👩‍🍳👨‍🍳`
-    //   );
-    console.error(error)
+    next(error);
   }
 };
 module.exports = {
