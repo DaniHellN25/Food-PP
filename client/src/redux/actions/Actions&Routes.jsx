@@ -1,0 +1,10 @@
+export const GET_ALL_RECIPES = 'GET_ALL_RECIPES';
+export const GET_BY_NAME = 'GET_BY_NAME';
+export const GET_TYPES = 'GET_TYPES';
+export const GET_BY_ID = 'GET_BY_ID';
+export const CREATE_RECIPE = 'CREATE_RECIPE';
+export const ROUTE_GET_ALL = "http://localhost:3002/recipes";
+export const ROUTE_GET_BY_NAME = "http://localhost:3002/recipes?name=";
+export const ROUTE_GET_BY_ID = "http://localhost:3002/recipes/:id";
+export const ROUTE_GET_TYPES = "http://localhost:3002/types";
+export const ROUTE_POST = "http://localhost:3002/recipe";
