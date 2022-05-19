@@ -18,7 +18,6 @@ const createRecipe = (req, res, next) => {
       summary,
       spoonacularScore,
       healthScore,
-      image,
       analyzedInstructions,
       ownRecipe: true,
     },

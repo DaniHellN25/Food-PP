@@ -28,6 +28,7 @@ module.exports = (sequelize) => {
     },
     image:{
       type: DataTypes.TEXT,
+      defaultValue: 'https://images.pexels.com/photos/349609/pexels-photo-349609.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
       
     },
     analyzedInstructions: {

@@ -1,37 +1,70 @@
 const { Recipe, Diet } = require("../db.js");
 const axios = require("axios");
-const { API_KEY } = process.env;
+const { API_KEY, API_KEY2 } = process.env;
 const { Op } = require("sequelize");
+function removeTags(str){
+  return str.replace(/<[^>]*>/g, ' ')
+               .replace(/\s{2,}/g, ' ')
+               .trim();}
 const getAllrecipes = async (req, res, next) => {
   if (req.query.name) return next();
   try {
     const api = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY2}&addRecipeInformation=true&number=100`
     );
-    const db = await Recipe.findAll({ include: Diet });
+    const db = await Recipe.findAll({
+      include: {
+        model: Diet,
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    let filterDB = db.map((recipe) => {
+      return {
+        id: recipe.id,
+        image: recipe.image,
+        title: recipe.title,
+        diets: recipe.diets
+          .map((type) => {
+            return type.name;
+          })
+          .join(),
+        // summary: removeTags(recipe.summary),
+        spoonacularScore: recipe.spoonacularScore,
+        healthScore: recipe.healthScore,
+      };
+    });
     if (api || db) {
       let apiResponse = api.data.results?.map((recipe) => {
         return {
+          vegetarian: recipe.vegetarian,
+          vegan: recipe.vegan,
+          glutenFree: recipe.glutenFree,
           id: recipe.id,
           image: recipe.image,
           title: recipe.title,
-          diets: recipe.diets.join(),
-          dishTypes: recipe.dishTypes.join(),
-          summary: recipe.summary,
+          diets: recipe.diets.map((e)=> e.split(' ').map((e) => e.charAt(0).toUpperCase() + e.slice(1))
+          .join(" ")).join().replace(/,/g, ', '),
+          dishTypes: recipe.dishTypes.map((e)=> e.split(' ').map((e) => e.charAt(0).toUpperCase() + e.slice(1))
+          .join(" ")).join().replace(/,/g, ', '),
+          summary: removeTags(recipe.summary),
           spoonacularScore: recipe.spoonacularScore,
           healthScore: recipe.healthScore,
         };
       });
 
-      let wholeResponse = [...apiResponse, ...db];
+      let wholeResponse = [...apiResponse, ...filterDB];
       res.send(wholeResponse);
     }
   } catch (error) {
-    return res
-      .status(404)
-      .send(
-        `We might have a problem in the kitchen  👩‍🍳👨‍🍳, we offer you our most sincere apologies.  We like you, have a cupcake🧁`
-      );
+    console.error(error)
+    // return res
+    //   .status(404).send(
+    //     // `We might have a problem in the kitchen  👩‍🍳👨‍🍳, we offer you our most sincere apologies.  We like you, have a cupcake🧁`
+    //     error
+    //   );
   }
 };
 
@@ -40,7 +73,7 @@ const getRecipeByName = async (req, res, next) => {
   const lowerCaseQueryName = name.toLowerCase();
   try {
     const api = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY2}&addRecipeInformation=true&number=100`
     );
     const db = await Recipe.findAll({
       where: {
@@ -51,7 +84,28 @@ const getRecipeByName = async (req, res, next) => {
           },
         },
       },
-      include: Diet,
+      include: {
+        model: Diet,
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    let filterDB = db.map((recipe) => {
+      return {
+        id: recipe.id,
+        image: recipe.image,
+        title: recipe.title,
+        diets: recipe.diets
+          .map((type) => {
+            return type.name;
+          })
+          .join().replace(/,/g, ', '),
+        summary: recipe.summary,
+        spoonacularScore: recipe.spoonacularScore,
+        healthScore: recipe.healthScore,
+      };
     });
     if (api || db) {
       let apiResponse = api.data.results
@@ -64,21 +118,25 @@ const getRecipeByName = async (req, res, next) => {
         })
         .map((recipe) => {
           return {
+            vegetarian: recipe.vegetarian,
+            vegan: recipe.vegan,
+            glutenFree: recipe.glutenFree,
             image: recipe.image,
             title: recipe.title,
-            diets: recipe.diets.join(),
+            diets: recipe.diets.map((e)=> e.split(' ').map((e) => e.charAt(0).toUpperCase() + e.slice(1))
+            .join(" ")).join().replace(/,/g, ', '),
             spoonacularScore: recipe.spoonacularScore,
             healthScore: recipe.healthScore,
           };
         });
-      if (!apiResponse.length && !db.length)
+      if (!apiResponse.length && !filterDB.length)
         return res
           .status(404)
           .send(
             `It seems we don't have recipes that meets your expectations, you may want to become a Chef and create it for all the folks out there 😉👩‍🍳👨‍🍳`
           );
       else {
-        let wholeResponse = [...apiResponse, ...db];
+        let wholeResponse = [...apiResponse, ...filterDB];
         return res.send(wholeResponse);
       }
     }
@@ -98,25 +156,51 @@ const getRecipeById = async (req, res, next) => {
         where: {
           id: id,
         },
-        include: Diet,
+        include: {
+          model: Diet,
+          attributes: ["name", "description"],
+          through: {
+            attributes: [],
+          },
+        },
       });
-      db.length
-        ? res.send(db)
+      let filterDB = db.map((recipe) => {
+        return {
+          id: recipe.id,
+          image: recipe.image,
+          title: recipe.title,
+          diets: recipe.diets
+            .map((type) => {
+              return type.name;
+            })
+            .join().replace(/,/g, ', '),
+          summary: recipe.summary,
+          spoonacularScore: recipe.spoonacularScore,
+          healthScore: recipe.healthScore,
+        };
+      })
+      filterDB.length
+        ? res.send(filterDB)
         : res.send(
             `It seems we don't have that recipe yet... But you may want to become a Chef and create it for all the folks out there 😉👩‍🍳👨‍🍳`
           );
     } else if (regexExpNum(id)) {
       const api = await axios.get(
-        `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
+        `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY2}`
       );
       const { data } = api;
       let apiResponse = (() => {
         return {
+          vegetarian: data.vegetarian,
+          vegan: data.vegan,
+          glutenFree: data.glutenFree,
           image: data.image,
           title: data.title,
-          dishTypes: data.dishTypes.join(),
-          diets: data.diets.join(),
-          summary: data.summary,
+          dishTypes: data.dishTypes.map((e)=> e.split(' ').map((e) => e.charAt(0).toUpperCase() + e.slice(1))
+          .join(" ")).join().replace(/,/g, ', '),
+          diets: data.diets.map((e)=> e.split(' ').map((e) => e.charAt(0).toUpperCase() + e.slice(1))
+          .join(" ")).join().replace(/,/g, ', '),
+          summary: removeTags(data.summary),
           spoonacularScore: data.spoonacularScore,
           healthScore: data.healthScore,
           analyzedInstructions: data.analyzedInstructions[0]?.steps
