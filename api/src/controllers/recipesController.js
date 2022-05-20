@@ -30,7 +30,7 @@ const getAllrecipes = async (req, res, next) => {
           .map((type) => {
             return type.name;
           })
-          .join(),
+          .join().replace(/,/g, ', '),
         // summary: removeTags(recipe.summary),
         spoonacularScore: recipe.spoonacularScore,
         healthScore: recipe.healthScore,

@@ -1,14 +1,14 @@
 const { Diet } = require("../db.js");
 const axios = require("axios");
 const {
-  API_KEY
+  API_KEY, API_KEY2
 } = process.env;
 
 //mapeo todos los resultaos de la busqueda para obtener solo los tipo de dieta de cada uno, obtengo un arreglo de objetos y por cada  elemento en la propiedad diets checo si estan en mi var para pushearlos. Ya filtradas solo queda checar si estan en la BD o crearlos
-const getTypes = async (req, res) => {
+const getTypes = async (req, res, next) => {
   try {
     const api = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY2}&addRecipeInformation=true&number=40`
     );
     if (api) {
       let apiResponseTypes = [];
@@ -35,7 +35,7 @@ const getTypes = async (req, res) => {
           },
         });
       });
-      const db = await Diet.findAndCountAll();
+      const db = await Diet.findAll();
       return res.send(db);
     }
   } catch (error) {
@@ -57,11 +57,11 @@ const createInitialTypes = async (req, res, next) => {
     
     description: 'No ingredients may contain meat or meat by-products, such as bones or gelatin.'
     },
-      { name: 'Lacto-Vegetarian',
+      { name: 'Lacto Vegetarian',
     
     description: 'All ingredients must be vegetarian and none of the ingredients can be or contain egg.'
     },
-      { name: 'Ovo-Vegetarian',
+      { name: 'Ovo Vegetarian',
     
     description: 'All ingredients must be vegetarian and none of the ingredients can be or contain dairy.'
     },
