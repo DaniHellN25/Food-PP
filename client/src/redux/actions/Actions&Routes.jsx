@@ -8,3 +8,4 @@ export const ROUTE_GET_BY_NAME = "http://localhost:3002/recipes?name=";
 export const ROUTE_GET_BY_ID = "http://localhost:3002/recipes/:id";
 export const ROUTE_GET_TYPES = "http://localhost:3002/types";
 export const ROUTE_POST = "http://localhost:3002/recipe";
+export const FILTER_BY_DIET = 'FILTER_BY_DIET'

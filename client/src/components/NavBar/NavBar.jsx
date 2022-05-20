@@ -17,9 +17,6 @@ export default function NavBar() {
       <li>
         <NavLink to='/types' className={({isActive})=> (isActive ? 'active' : 'inactive')}>Diet Types</NavLink>
       </li>
-      <li>
-        <NavLink to='/recipes' className={({isActive})=> (isActive ? 'active' : 'inactive')}>Recipes</NavLink>
-      </li>
       </ul></div>
   )
 }
