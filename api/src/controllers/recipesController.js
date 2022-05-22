@@ -79,9 +79,10 @@ const getRecipeByName = async (req, res, next) => {
       where: {
         title: {
           [Op.or]: {
-            [Op.eq]: lowerCaseQueryName,
-            [Op.substring]: lowerCaseQueryName,
-          },
+            [Op.eq]: name,
+            [Op.iLike]: name,
+            [Op.substring]: name
+          }
         },
       },
       include: {
@@ -174,6 +175,7 @@ const getRecipeById = async (req, res, next) => {
               return type.name;
             })
             .join().replace(/,/g, ', '),
+          analyzedInstructions: recipe.analyzedInstructions,
           summary: recipe.summary,
           spoonacularScore: recipe.spoonacularScore,
           healthScore: recipe.healthScore,

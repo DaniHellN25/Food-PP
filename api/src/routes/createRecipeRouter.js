@@ -7,7 +7,7 @@ const { createRecipe } = require('../controllers/createRecipeController');
 const createRecipeRouter = Router();
 
 // Configurar los routers
-createRecipeRouter.use('/', createRecipe)
+createRecipeRouter.post('/', createRecipe)
 // Ejemplo: router.use('/auth', authRouter);
 
 
