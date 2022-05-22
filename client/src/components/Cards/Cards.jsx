@@ -6,7 +6,7 @@ import Filter from "../Filter/Filter.jsx";
 
 export default function Cards() {
   const dispatch = useDispatch();
-  const renderRecipes = useSelector((state) => state.filter);
+  const renderRecipes = useSelector((state) => state.copy);
   useEffect(() => {
     dispatch(getAll());
   }, []);

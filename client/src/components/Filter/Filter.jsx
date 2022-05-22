@@ -1,16 +1,39 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { filter } from "../../redux/actions/index.jsx";
-
-export default function Filter() {
+import { filterByDiet, orderByName, orderByRating } from "../../redux/actions/index.jsx";
+import { useDispatch} from "react-redux";
+const Filter = ({ setRating, setOrder }) => {
   const dispatch = useDispatch();
-  function handleSelect(e) {
-    dispatch(filter(e.target.value));
+
+  function handlerFilterByDiet(e) {
+    e.preventDefault();
+    dispatch(filterByDiet(e.target.value));
+  }
+
+  function handlerOrderByName(e) {
+    e.preventDefault();
+    dispatch(orderByName(e.target.value));
+    setOrder(`Order ${e.target.value}`);
+  }
+
+  function handlerOrderByRating(e) {
+    e.preventDefault();
+    dispatch(orderByRating(e.target.value)); // dispatch
+    setRating(`Rating ${e.target.value}`); // when i set the page, the local state is modified and rendered
   }
 
   return (
     <div>
-      <select onChange={handleSelect}>
+      <select onChange={(e) => handlerOrderByName(e)}>
+        <option value="A to Z">A to Z</option>{" "}
+        {/* value to be able to send things by payload*/}
+        <option value="Z to A">Z to A</option>
+      </select>
+      <select onChange={(e) => handlerOrderByRating(e)}>
+        <option value="High Score"> High score </option>
+        <option value="Low Score"> Low score </option>
+      </select>
+      <label >Order by diet</label>
+      <select onChange={handlerFilterByDiet}>
         <option value="All">All</option>
         <option value="Gluten Free">Gluten Free</option>
         <option value="Vegan">Vegan</option>
@@ -32,3 +55,6 @@ export default function Filter() {
     </div>
   );
 }
+
+
+export default Filter;
