@@ -78,11 +78,7 @@ const getRecipeByName = async (req, res, next) => {
     const db = await Recipe.findAll({
       where: {
         title: {
-          [Op.or]: {
-            [Op.eq]: name,
-            [Op.iLike]: name,
-            [Op.substring]: name
-          }
+          [Op.iLike]: `%${lowerCaseQueryName}%`,
         },
       },
       include: {
