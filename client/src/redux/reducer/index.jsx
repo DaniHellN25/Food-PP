@@ -18,9 +18,6 @@ const initialState = {
   diets: [],
   favorites: [],
 };
-// var stringHasAll = (s, query) =>
-//   // convert the query to array of "words" & checks EVERY item is contained in the string
-//   query.split(' ').every(q => new RegExp('\\b' + q + '\\b', 'i').test(s));
 export default function rootReducer(state = initialState, { type, payload }) {
   switch (type) {
     case GET_ALL_RECIPES:
@@ -105,60 +102,3 @@ export default function rootReducer(state = initialState, { type, payload }) {
       return state;
   }
 }
-
-//   case FILTER_BY_DIET:
-//     if (payload === "All") {
-//       return {
-//         ...state,
-//         copy: state.recipes,
-//       };
-//     } else if (payload) {
-//       let filterarr = []
-//       filterarr = state.recipes.filter((r) =>  r.diets.includes(payload))
-//       return {
-//         ...state,
-//         filter: filterarr,
-//       };
-//     } else {
-//       return {
-//         ...state,
-//   };
-// }
-// case ORDER_BY_NAME:
-//   let sortedRecipesByName =
-//     payload === "A to Z"
-//       ? state.recipes.sort((a, b) => {
-//           if (a.title > b.title) {
-//             return 1;
-//           } else if (b.title > a.title) {
-//             return -1;
-//           }
-//           return 0;
-//         })
-//       : state.recipes.sort((a, b) => {
-//           if (a.title > b.title) {
-//             return -1;
-//           } else if (b.title > a.title) {
-//             return 1;
-//           }
-//           return 0
-//         });
-//         return {
-//           ...state,
-//           filter: sortedRecipesByName
-//         }
-// case ASC:
-//   return {
-//     ...state,
-//     filter: state.recipes
-//     .filter((b) => b.title !== null)
-//     .sort((a, b) => (a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1)),
-//   };
-
-//   case DESC:
-//     return {
-//     ...state,
-//     filter: state.recipes
-//     .filter((b) => b.title !== null)
-//     .sort((a, b) => (a.title.toLowerCase() < b.title.toLowerCase() ? 1 : -1)),
-//   };

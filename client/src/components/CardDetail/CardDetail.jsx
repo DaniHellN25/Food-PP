@@ -29,9 +29,9 @@ const CardDetail = () => {
   }, []);
 
   return (
-    <div className="create-wrapper">
-      <div className="nav-home">
-        <div className="max-content">
+    <div className="detail-wrapper">
+      <div className="Home-logo">
+        <div className="Logo-Nav">
           <Link to="/home">
             <div className="logo">
               <h1>Logo</h1>
@@ -43,7 +43,7 @@ const CardDetail = () => {
       {loader ? (
         <Loader></Loader>
       ) : (
-        <>
+        <div>
           {detail.length === 0 ? (
             <h1>Not Found</h1>
           ) : (
@@ -51,72 +51,84 @@ const CardDetail = () => {
               <div className="card-detail">
                 <div className="image-button-detail">
                   <img
-                    src={detail[0].image ? detail[0].image : 'Not Found'}
+                    src={detail.image ? detail.image : 'Not Found'}
                     alt="Recipe"
                     width="450"
-                  />
+                    />
                   <button onClick={() => navigate("/home")} className="btn">
                     Home
                   </button>
                 </div>
                 <div className="content-detail">
-                  <h2>{detail[0].title}</h2>
+                    <>
+                    {detail.ownRecipe === true ? <div>
+                      <h1>This recipe was created by the community</h1>
+                      </div> : ('')}
+                      </>
+                    <>
+                    </>
+                  <h2>{detail.title}</h2>
+                  <>{detail.ownRecipe ? ''  : <div>
+                    <h4>Is it  vegetarian?</h4>
+                    <p >{detail.vegetarian === true? 'Yes it is 😉'
+                        : "Nope, not this time cowboy"}</p>
+                  </div>}
+                    
+                  </>
+                  <>{detail.ownRecipe ? ''  : <div><h4>Is it vegan?</h4>
+                    <p >{detail.vegan === true ? 'Yes it is 😉'
+                        : "Nope, not this time cowboy"}</p></div>}
+                  </>
+                  <> {detail.ownRecipe ? ''  : <div><h4>Is it Gluten Free?</h4>
+                    <p >{detail.glutenFree === true ? 'Yes it is 😉'
+                        : "Nope, not this time cowboy"}</p></div>}
+                  </>
                   <>
                     <h4>Summary</h4>
-                    <p >{detail[0].summary}</p>
+                    <p >{detail.summary ? detail.summary
+                        : "No data found"}</p>
                   </>
                   <>
                     <h4>Rating</h4>
                     <p>
-                      {detail[0].spoonacularScore
-                        ? detail[0].spoonacularScore + " points"
-                        : "No rating were found"}
+                      {detail.spoonacularScore
+                        ? `${detail.spoonacularScore} spoonacularScore`
+                        : "No data found"}
                     </p>
                   </>
                   <>
                     <h4>Health</h4>
                     <p>
-                      {detail[0].healthScore
-                        ? `${detail[0].healthScore}%`
-                        : "No health were found"}
+                      {detail.healthScore
+                        ? `${detail.healthScore} healthScore`
+                        : "No data found"}
                     </p>
                   </>
                   <>
                     <h4>Diets</h4>
                     <p>
-                       {detail[0].diets}
+                       {detail.diets ? `${detail.diets}`
+                        : "No data found"}
                     </p>
                   </>
-
-                  {detail[0].created === true ? (
-                    ""
-                  ) : (
-                    <>
-                    </>
-                  )}
-                  <>
                     <h4>Instructions</h4>
                     <p>
-                      {detail[0].analyzedInstructions
-                        ? detail[0].analyzedInstructions
-                        : "no instructions were found"}
+                      {detail.analyzedInstructions
+                        ? detail.analyzedInstructions
+                        : "No steps were found. Time to experiment a little I guess 👩‍🍳👩‍🍳"}
                     </p>
-                  </>
-                  {detail[0].created === true ? (
-                    ""
-                  ) : (
                     <>
                       <h4>DishTypes</h4>
                       <p>
-                        {detail[0].dishTypes}
+                        {detail.dishTypes? detail.dishTypes
+                        : "No data found"} 
                       </p>
                     </>
-                  )}
                 </div>
               </div>
             </div>
           )}
-        </>
+        </div>
       )}
     </div>
   );

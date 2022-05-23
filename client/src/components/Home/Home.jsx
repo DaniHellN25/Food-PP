@@ -59,7 +59,7 @@ const Home = () => {
           </div>
           <div className="content-filter">
             <div className="card-filter">
-              <button onClick={handleClick}>Recipes</button>
+              <button onClick={handleClick}>See all recipes</button>
               <Filter
                 setCurrentPage={setCurrentPage}
                 setRating={setRating}
@@ -78,13 +78,15 @@ const Home = () => {
                 <div className="recipes-home">
                   {currentRecipes?.map((e) => {
                     return (
-                      <Link to={`/recipe/${e.id}`} key={e.id}>
+                      <Link to={`/recipes/${e.id}`} key={e.id}>
                         <Card
                           key={e.id}
+                          id= {`ID:${e.id}`}
                           image={e.image}
                           title={e.title}
-                          healthScore={e.healthScore}
-                          diets={e.diets}
+                          healthScore={`healthScore: ${e.healthScore}`}
+                          diets={`Diets: ${e.diets}`}
+                          dishTypes={`Dish type: ${e.dishTypes ? e.dishTypes: 'Maybe we will add them later'}`}
                         />
                       </Link>
                     );
