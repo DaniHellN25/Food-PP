@@ -1,0 +1,72 @@
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    font-family: sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    background-image: url(https://images.pexels.com/photos/5779786/pexels-photo-5779786.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940);
+    background-size:cover ;
+    background-blend-mode: overlay ;
+    overflow: hidden;
+    min-height: 100vh;
+    min-width: 100vh;
+  }
+  .content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  }
+  .btn {
+   text-align: center;
+    margin: 0.5rem auto;
+    padding: 0.75rem 2.5rem;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    text-orientation: sideways-right;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+   border-color: transparent;
+    border-radius: 100rem;
+  }  
+
+ .btn {
+  
+    background-image: url(https://c.tenor.com/IyAbywgqGwsAAAAC/portal-blender.gif);
+    background-position: center;
+    background-size: cover;
+    opacity: .30;
+    border-radius: 10rem;
+    width: 300px;
+    height: 300px;
+    
+    margin-left: 70px;
+ }
+
+ .btn:hover{
+  transform: scale(120%);
+  opacity: 1;
+  cursor: pointer;
+  
+ }
+
+.text{
+  font-size:2rem;
+  color: grey;
+  font-weight: bold;
+  text-shadow: -1px 0 black, 0 5px black, 5px 0 black, 0 -1px black;;
+  font-style: oblique;
+  
+}
+
+.text:hover{
+  transform: scale(120%);
+  color: grey;
+  text-shadow:-1px 0 black, 0 5px black, 5px 0 black, 0 -1px black;;
+  transition-delay: 20ms;
+  opacity: .8;
+}

@@ -23,7 +23,7 @@ function validateInput(input) {
       "Brief dish description... still without any ideas, huh? Can we suggest you something like 'It tastes like something you've never had before'? 😉";
   }
 
-  if (input.image.length <= 1 && !regexImg.test(input.image)) {
+  if (!input.image.length  && !regexImg.test(input.image)) {
     errors.image = `Feel free to leave this default image or add a new one. For now we only take free stock photos you can find online(You know copy can be a bummer sometimes but,  hey! Let's respect other people's creative properties 😉). We are working on our servers to let you add your own photos. In the meanwhile... visit this page to get really good photos https://www.pexels.com/es-es/  
     We'll like you to remember you that you can actually donate to the author of the photo you choose😉`;
   }
@@ -73,7 +73,8 @@ export default function RecipeCreation() {
       recipe.healthScore > 0 &&
       recipe.healthScore < 100 && 
       recipe.analyzedInstructions.length &&
-      recipe.diets.length       
+      recipe.diets.length  &&
+      recipe.image.length   
     ) {
       dispatch(postRecipe(recipe));
       alert(`Recipe cooked! Ready to be served at home 😉`);

@@ -1,0 +1,14 @@
+.Card{
+    border-radius: 10px;
+}
+
+.imgCardDiv{
+    height: 300px;
+    width: 300px;
+    margin-bottom: -76px;
+}
+.imgCard{
+    max-width: 100%;
+    max-height: 100%;
+    display: block; 
+}

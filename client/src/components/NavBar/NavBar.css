@@ -5,3 +5,20 @@
 .inactive{
     color: blue;
 }
+
+ul {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    margin: 0% -3%;
+    list-style-type: none;
+ 
+}
+
+li {
+    margin-left: 25px;
+    margin-right: 25px;
+    padding-right: 25px;
+    font-weight: bold;
+  
+}

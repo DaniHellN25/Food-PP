@@ -1,0 +1,34 @@
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+      font-family: sans-serif;
+      margin-left: auto;
+      margin-right: auto;
+      background: url(https://media2.giphy.com/media/7WDpgeYllwXWCTn0I8/giphy.gif?cid=790b76119cb895c3e449945f5158c714892cb468674de4cb&rid=giphy.gif&ct=g);
+      background-size:cover ;
+      background-blend-mode: overlay ;
+      overflow: hidden;
+      min-height: 100vh;
+      min-width: 100vh;
+}
+
+
+.textLoader{
+    font-size:2rem;
+    color: grey;
+    font-weight: bold;
+    text-shadow: -1px 0 black, 0 5px black, 5px 0 black, 0 -1px black;;
+    font-style: oblique;
+    
+    
+  }
+
+  @keyframes bounce {
+    33% { transform: translateY(-20px); }
+    66% { transform: translateY(0px); }
+  }
+ .textLoader {
+    animation: bounce 1s infinite ease-in-out;
+
+}

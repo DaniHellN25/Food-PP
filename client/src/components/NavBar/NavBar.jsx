@@ -1,11 +1,10 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import Search from '../SearchBar/SearchBar'
 import "./NavBar.css"
 
-export default function NavBar({active}) {
+export default function NavBar() {
   return (
-    <div><ul>
+    <div><ul className='NavUl'>
       <li>
         <NavLink to= '/home' className={({isActive})=> (isActive ? 'active' : 'inactive')}>Home</NavLink>
       </li>
@@ -19,7 +18,6 @@ export default function NavBar({active}) {
         <NavLink to='/types' className={({isActive})=> (isActive ? 'active' : 'inactive')}>Diet Types</NavLink>
       </li>
       </ul>
-      {active ? <Search /> : null}
       </div>
   )
 }

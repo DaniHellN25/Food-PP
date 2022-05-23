@@ -1,8 +1,8 @@
 import React from 'react'
-
+import './Card.css'
 export default function Card(props) {
   return (
-    <div>
+    <div className='Card'>
       <div>
       <div>
         <h1>{props.id}</h1>
@@ -10,7 +10,9 @@ export default function Card(props) {
       <div>
         <h1>{props.title}</h1>
       </div>
-        <img src={props.image} alt="" />
+      <div className='imgCardDiv'>
+    <img className='imgCard' src={props.image} alt="Huh... something weird happen... Have you seen my image?🤔🤨😅" />
+      </div>
       </div>
       <div>
         <h3>{props.diets}</h3>

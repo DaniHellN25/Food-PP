@@ -1,8 +1,8 @@
-
+import './Loader.css'
 const Loader = () => {
   return (
     <div className="loader">
-      <h1>Cooking something For you</h1>
+      <h1 className='textLoader'>Cooking something just for you... 👩‍🍳👨‍🍳😉</h1>
     </div>
   );
 };

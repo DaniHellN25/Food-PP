@@ -59,19 +59,19 @@ export default function rootReducer(state = initialState, { type, payload }) {
       let orderBy =
         payload === "A to Z"
           ? state.recipes.sort(function (a, b) {
-              if (a.title > b.title) {
+              if (a.title.toLowerCase() > b.title.toLowerCase()) {
                 return 1;
               }
-              if (b.title > a.title) {
+              if (b.title.toLowerCase() > a.title.toLowerCase()) {
                 return -1;
               }
               return 0; //
             })
           : state.recipes.sort(function (a, b) {
-              if (a.title > b.title) {
+              if (a.title.toLowerCase() > b.title.toLowerCase()) {
                 return -1;
               }
-              if (b.title > a.title) {
+              if (b.title.toLowerCase() > a.title.toLowerCase()) {
                 return 1;
               }
               return 0;
