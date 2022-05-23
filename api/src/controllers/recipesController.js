@@ -1,16 +1,18 @@
 const { Recipe, Diet } = require("../db.js");
 const axios = require("axios");
-const { API_KEY, API_KEY2 } = process.env;
+const { API_KEY, API_KEY2, API_KEY3, API_KEY4} = process.env;
+
 const { Op } = require("sequelize");
 function removeTags(str){
   return str.replace(/<[^>]*>/g, ' ')
                .replace(/\s{2,}/g, ' ')
                .trim();}
+
 const getAllrecipes = async (req, res, next) => {
   if (req.query.name) return next();
   try {
     const api = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY2}&addRecipeInformation=true&number=100`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY3}&addRecipeInformation=true&number=100`
     );
     const db = await Recipe.findAll({
       include: {
@@ -31,7 +33,6 @@ const getAllrecipes = async (req, res, next) => {
             return type.name;
           })
           .join().replace(/,/g, ', '),
-        // summary: removeTags(recipe.summary),
         spoonacularScore: recipe.spoonacularScore,
         healthScore: recipe.healthScore,
       };
@@ -39,9 +40,9 @@ const getAllrecipes = async (req, res, next) => {
     if (api || db) {
       let apiResponse = api.data.results?.map((recipe) => {
         return {
-          vegetarian: recipe.vegetarian,
-          vegan: recipe.vegan,
-          glutenFree: recipe.glutenFree,
+          // vegetarian: recipe.vegetarian,
+          // vegan: recipe.vegan,
+          // glutenFree: recipe.glutenFree,
           id: recipe.id,
           image: recipe.image,
           title: recipe.title,
@@ -49,7 +50,7 @@ const getAllrecipes = async (req, res, next) => {
           .join(" ")).join().replace(/,/g, ', '),
           dishTypes: recipe.dishTypes.map((e)=> e.split(' ').map((e) => e.charAt(0).toUpperCase() + e.slice(1))
           .join(" ")).join().replace(/,/g, ', '),
-          summary: removeTags(recipe.summary),
+          // summary: removeTags(recipe.summary),
           spoonacularScore: recipe.spoonacularScore,
           healthScore: recipe.healthScore,
         };
@@ -73,7 +74,7 @@ const getRecipeByName = async (req, res, next) => {
   const lowerCaseQueryName = name.toLowerCase();
   try {
     const api = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY2}&addRecipeInformation=true&number=100`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY3}&addRecipeInformation=true&number=100`
     );
     const db = await Recipe.findAll({
       where: {
@@ -99,7 +100,7 @@ const getRecipeByName = async (req, res, next) => {
             return type.name;
           })
           .join().replace(/,/g, ', '),
-        summary: recipe.summary,
+        // summary: recipe.summary,
         spoonacularScore: recipe.spoonacularScore,
         healthScore: recipe.healthScore,
       };
@@ -115,9 +116,10 @@ const getRecipeByName = async (req, res, next) => {
         })
         .map((recipe) => {
           return {
-            vegetarian: recipe.vegetarian,
-            vegan: recipe.vegan,
-            glutenFree: recipe.glutenFree,
+            // vegetarian: recipe.vegetarian,
+            // vegan: recipe.vegan,
+            // glutenFree: recipe.glutenFree,
+            id: recipe.id,
             image: recipe.image,
             title: recipe.title,
             diets: recipe.diets.map((e)=> e.split(' ').map((e) => e.charAt(0).toUpperCase() + e.slice(1))
@@ -155,7 +157,7 @@ const getRecipeById = async (req, res, next) => {
         },
         include: {
           model: Diet,
-          attributes: ["name", "description"],
+          attributes: ["name"],
           through: {
             attributes: [],
           },
@@ -175,16 +177,17 @@ const getRecipeById = async (req, res, next) => {
           summary: recipe.summary,
           spoonacularScore: recipe.spoonacularScore,
           healthScore: recipe.healthScore,
+          ownRecipe: recipe.ownRecipe,
         };
       })
       filterDB.length
-        ? res.send(filterDB)
+        ? res.send(filterDB[0])
         : res.send(
             `It seems we don't have that recipe yet... But you may want to become a Chef and create it for all the folks out there 😉👩‍🍳👨‍🍳`
           );
     } else if (regexExpNum(id)) {
       const api = await axios.get(
-        `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY2}`
+        `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY3}`
       );
       const { data } = api;
       let apiResponse = (() => {
