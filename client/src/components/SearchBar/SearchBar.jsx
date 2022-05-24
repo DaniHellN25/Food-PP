@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { searchByName } from '../../redux/actions';
 
-const Search = () => {
+const Search = ({active}) => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
 
