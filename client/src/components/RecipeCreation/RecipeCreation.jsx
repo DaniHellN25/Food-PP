@@ -11,7 +11,7 @@ function validateInput(input) {
 
   if (!input.title || !/([a-zA-Z])\w+/g.test(input.title)) {
     errors.title =
-      "Don't have any ideas? It's ok, something descriptive should work or not... take mexican 'mole' as an example 😅";
+      "Don't have any ideas? It's ok, something descriptive should work or not... take mexican 'mole' as an example 😅 and remember the name should not be more than 60 characters";
   }
   if (input.spoonacularScore < 0 || input.spoonacularScore > 100) {
     errors.spoonacularScore = "Rating must be between 0 and 100";
@@ -24,9 +24,12 @@ function validateInput(input) {
       "Brief dish description... still without any ideas, huh? Can we suggest you something like 'It tastes like something you've never had before'? 😉";
   }
 
-  if (!input.image.length  && !regexImg.test(input.image)) {
+  if (!input.image.length  || regexImg.test(input.image) === false) {
     errors.image = `Feel free to leave this default image or add a new one. For now we only take free stock photos you can find online(You know copy can be a bummer sometimes but,  hey! Let's respect other people's creative properties 😉). We are working on our servers to let you add your own photos. In the meanwhile... visit this page to get really good photos https://www.pexels.com/es-es/  
     We'll like you to remember you that you can actually donate to the author of the photo you choose😉`;
+  }
+  if (!input.analyzedInstructions.length) {
+    errors.image = `We highly recommend to you to be clear and concise for the "Steps" section, don't overlook the obvious😉`;
   }
   return errors;
 }
@@ -75,7 +78,7 @@ export default function RecipeCreation() {
       recipe.healthScore < 100 && 
       recipe.analyzedInstructions.length &&
       recipe.diets.length  &&
-      recipe.image.length   
+      recipe.image.length > 50  
     ) {
       dispatch(postRecipe(recipe));
       alert(`Recipe cooked! Ready to be served at home 😉`);
@@ -129,7 +132,8 @@ export default function RecipeCreation() {
               <NavBar active={true} />
             <video className="video" autoPlay muted preload loop src="https://vod-progressive.akamaized.net/exp=1653337072~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F4365%2F14%2F371826781%2F1544220979.mp4~hmac=fe8c02c426c65348d5340d6560ab2c0794d825867d049fd30d771d0d5ca38069/vimeo-prod-skyfire-std-us/01/4365/14/371826781/1544220979.mp4?filename=video.mp4"></video>
             </div>
-      <div>Recipe Creation</div>
+            <div className="section-create">
+            <h1>Here you can add your own Recipe</h1>
       <form className="Form">
         <label>Title</label>
         <input
@@ -167,7 +171,7 @@ export default function RecipeCreation() {
           <p style={{ color: "blue" }}>{errors.healthScore}</p>
         )}
         <label>Image or photo:</label>
-        <input name="image" value={recipe.image} onChange={handleChange} />
+        <input type="url" name="image" value={recipe.image} onChange={handleChange} />
         {errors.image && <p style={{ color: "blue" }}>{errors.image}</p>}
         <label>Steps:</label>
         <input
@@ -175,6 +179,7 @@ export default function RecipeCreation() {
           value={recipe.analyzedInstructions}
           onChange={handleChange}
         />
+        {errors.analyzedInstructions && <p style={{ color: "blue" }}> {errors.analyzedInstructions}</p>}
         <label>Diets</label>
         {stateDiets ? (
               <div className="CheckboxD">
@@ -194,6 +199,8 @@ export default function RecipeCreation() {
               <p>Loading...</p>
             )}
       </form>
+            </div>
+      
       <div>
         <button className="btnCreate" type="submit" onClick={handleSubmit}> Send to the kitchen 👨‍🍳👩‍🍳
         </button>

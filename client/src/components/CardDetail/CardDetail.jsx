@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { clear, getById } from "../../redux/actions";
+import { addFavoriteRecipe, clear, getById, removeFavoriteRecipes } from "../../redux/actions";
 import NavBar from "../NavBar/NavBar";
 import Loader from "../Home/Loader";
 import './CardDetail.css'
@@ -21,6 +21,17 @@ const CardDetail = () => {
       dispatch(clear()); //Clear detail
     };
   }, [dispatch, id]);
+
+  function handleFavorite(e) {
+    e.preventDefault();
+    dispatch(addFavoriteRecipe(detail))
+    alert(`Recipe added! It's waiting for you at "Your Cookbook" 😉`);
+  }
+  function handleRemove(e) {
+    e.preventDefault();
+    dispatch(removeFavoriteRecipes(detail.id))
+    alert(`Recipe removed! It wasn't so good, Isn't it? 😉`);
+  }
 
   useEffect(() => {
     setLoader(true);
@@ -55,41 +66,43 @@ const CardDetail = () => {
                     alt="It must be somewhere 🔎"
                     width="450"
                     />
-                  <button onClick={() => navigate("/home")} className="btn">
+                  <button onClick={() => navigate("/home")} className="btnDetail">
                     Home
                   </button>
+                <button className="btnDetail" onClick={(e)=> handleFavorite(e)}>Add to your Cookbook⭐</button>
+                  <button className="btnDetail" onClick={(e)=> handleRemove(e)}>Remove from Cookbook❌</button>
                 </div>
                 <div className="content-detail">
-                    <h2>{detail.title}</h2>
+                    <h1>{detail.title}</h1>
                     <>
                     {detail.ownRecipe === true ? <div>
-                      <h1>This recipe was created by the community</h1>
+                      <h2>This recipe was created by the community</h2>
                       </div> : ('')}
                       </>
                     <>
                     </>
                   <>{detail.ownRecipe ? ''  : <div>
-                    <h4>Is it  vegetarian?</h4>
+                    <h3>Is it  vegetarian?</h3>
                     <p >{detail.vegetarian === true? 'Yes it is 😉'
-                        : "Nope, not this time cowboy"}</p>
+                        : "Nope, not this time cowboy🥺"}</p>
                   </div>}
                     
                   </>
-                  <>{detail.ownRecipe ? ''  : <div><h4>Is it vegan?</h4>
+                  <>{detail.ownRecipe ? ''  : <div><h3>Is it vegan?</h3>
                     <p >{detail.vegan === true ? 'Yes it is 😉'
-                        : "Nope, not this time cowboy"}</p></div>}
+                        : "Nope, not this time cowboy🥺"}</p></div>}
                   </>
-                  <> {detail.ownRecipe ? ''  : <div><h4>Is it Gluten Free?</h4>
+                  <> {detail.ownRecipe ? ''  : <div><h3>Is it Gluten Free?</h3>
                     <p >{detail.glutenFree === true ? 'Yes it is 😉'
-                        : "Nope, not this time cowboy"}</p></div>}
+                        : "Nope, not this time cowboy 🥺"}</p></div>}
                   </>
                   <>
-                    <h4>Summary</h4>
+                    <h3>Summary</h3>
                     <p >{detail.summary ? detail.summary
                         : "No data found"}</p>
                   </>
                   <>
-                    <h4>Rating</h4>
+                    <h3>Rating</h3>
                     <p>
                       {detail.spoonacularScore
                         ? `${detail.spoonacularScore} spoonacularScore`
@@ -97,7 +110,7 @@ const CardDetail = () => {
                     </p>
                   </>
                   <>
-                    <h4>Health</h4>
+                    <h3>Health</h3>
                     <p>
                       {detail.healthScore
                         ? `${detail.healthScore} healthScore`
@@ -105,20 +118,20 @@ const CardDetail = () => {
                     </p>
                   </>
                   <>
-                    <h4>Diets</h4>
+                    <h3>Diets</h3>
                     <p>
                        {detail.diets ? `${detail.diets}`
                         : "No data found"}
                     </p>
                   </>
-                    <h4>Instructions</h4>
+                    <h3>Instructions</h3>
                     <p>
                       {detail.analyzedInstructions
                         ? detail.analyzedInstructions
                         : "No steps were found. Time to experiment a little I guess 👩‍🍳👩‍🍳"}
                     </p>
                     <>
-                      <h4>DishTypes</h4>
+                      <h3>DishTypes</h3>
                       <p>
                         {detail.dishTypes? detail.dishTypes
                         : "No data found"} 

@@ -18,11 +18,12 @@ min-width: 100vh;
 
 
 .DietCards{
-        
+ 
     display: grid;
     grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(1, 1fr);
   grid-gap: 5px;
   overflow: hidden; 
   min-width: 0; 
+  text-align:inherit;
 }

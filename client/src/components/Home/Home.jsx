@@ -9,7 +9,7 @@ import Loader from "./Loader";
 import './Home.css'
 import { getAll } from "../../redux/actions";
 import Search from "../SearchBar/SearchBar";
-const Home = ({active}) => {
+const Home = () => {
   const dispatch = useDispatch();
   const allRecipes = useSelector((state) => state.recipes);
 

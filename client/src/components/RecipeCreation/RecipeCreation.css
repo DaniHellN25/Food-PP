@@ -56,3 +56,9 @@ justify-content: space-around;
     cursor: pointer;
     
    }
+
+.section-create{
+   display: flex;
+   flex-direction: column;
+   width: 80%;
+}   

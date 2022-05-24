@@ -89,7 +89,7 @@ export function addFavoriteRecipe(recipe){
     payload:recipe
   }
 }
-export function removeMovieFavorite(id){
+export function removeFavoriteRecipes(id){
   return{
     type:REMOVE_FAVORITE,
     payload:id

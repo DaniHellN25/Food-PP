@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import {  removeMovieFavorite } from "../../redux/actions";
+import Card from "../Card/Card";
 import NavBar from "../NavBar/NavBar";
 import './Favorite.css'
-
 export default function Favorites() {
+  const favorite = useSelector((state) => state.favorites);
 
+  
   return (
     <div className="FavoriteWrapper">
         <div className="Video-NavBar">
@@ -20,6 +21,33 @@ export default function Favorites() {
             </div>
       <h1>Favorite Recipes</h1>
       <h2>Here you'll find your favorite recipes</h2>
+      <div className="gridCards">
+              <div className="Cards">
+            {favorite ? (
+                <div className="recipesCards">
+                  {favorite?.map((e) => {
+                    return (
+                      <div>
+                        <Link to={`/recipes/${e.id}`} key={e.id}>
+                      <Card
+                        key={e.id}
+                        id= {`ID:${e.id}`}
+                        image={e.image}
+                        title={e.title}
+                        healthScore={`healthScore: ${e.healthScore}`}
+                        diets={`Diets: ${e.diets}`}
+                        dishTypes={`Dish type: ${e.dishTypes ? e.dishTypes: 'Maybe we will add them later'}`}
+                      />
+                    </Link>
+            </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <h1>You don't have any recipes in your Cookbook, go home, check details and add some 😉</h1>
+              )}
+            </div>
+              </div>
     </div>
   );
 }

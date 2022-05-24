@@ -25,6 +25,7 @@ export default function Types() {
             <video className="video" autoPlay muted preload loop src="https://vod-progressive.akamaized.net/exp=1653337072~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F4365%2F14%2F371826781%2F1544220979.mp4~hmac=fe8c02c426c65348d5340d6560ab2c0794d825867d049fd30d771d0d5ca38069/vimeo-prod-skyfire-std-us/01/4365/14/371826781/1544220979.mp4?filename=video.mp4"></video>
             </div>
             <div className='ContainerCards'>
+              <h1>Here you'll find some info about the diet types that our recipes can have</h1>
             <div className='DietCards'>
             {renderDiets.length ?
         renderDiets.map((diet) => (
