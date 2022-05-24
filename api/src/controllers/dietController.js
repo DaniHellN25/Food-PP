@@ -8,7 +8,7 @@ const {
 const getTypes = async (req, res, next) => {
   try {
     const api = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY3}&addRecipeInformation=true&number=40`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=40`
     );
     if (api) {
       let apiResponseTypes = [];
