@@ -9,6 +9,8 @@ import {
   GET_BY_ID,
   CLEAR,
   CREATE_RECIPE,
+  REMOVE_FAVORITE,
+  ADD_FAVORITE,
 } from "../actions/Actions&Routes";
 
 const initialState = {
@@ -31,6 +33,21 @@ export default function rootReducer(state = initialState, { type, payload }) {
         ...state,
         detail: payload,
       };
+      case ADD_FAVORITE:
+      const findRecipe = state.favorites.find((recipe)=> recipe.id === payload.id )
+      if(findRecipe) {
+        return state
+      }else{
+        return {
+          ...state,
+          favorites: [...state.favorites,payload]
+        } 
+      }
+    case REMOVE_FAVORITE:
+      return{
+        ...state,
+        favorites: state.favorites.filter((recipe)=> recipe.id !== payload)
+      }
     case GET_BY_NAME:
       return {
         ...state,

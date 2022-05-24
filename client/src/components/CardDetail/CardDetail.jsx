@@ -18,7 +18,7 @@ const CardDetail = () => {
   useEffect(() => {
     dispatch(getById(id));
     return () => {
-      dispatch(clear()); //Clean detail
+      dispatch(clear()); //Clear detail
     };
   }, [dispatch, id]);
 

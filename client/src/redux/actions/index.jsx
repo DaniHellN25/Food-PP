@@ -7,7 +7,7 @@ import {
   ROUTE_GET_ALL,
   ROUTE_GET_TYPES,
   GET_BY_ID,
-CLEAR, GET_BY_NAME, ROUTE_GET_BY_NAME, ROUTE_GET_BY_ID, CREATE_RECIPE, ROUTE_POST
+CLEAR, GET_BY_NAME, ROUTE_GET_BY_NAME, ROUTE_GET_BY_ID, CREATE_RECIPE, ROUTE_POST, ADD_FAVORITE, REMOVE_FAVORITE
 } from "./Actions&Routes";
 
 export function getAll() {
@@ -83,6 +83,18 @@ export function getDiets() {
 
 }
 
+export function addFavoriteRecipe(recipe){
+  return {
+    type:ADD_FAVORITE,
+    payload:recipe
+  }
+}
+export function removeMovieFavorite(id){
+  return{
+    type:REMOVE_FAVORITE,
+    payload:id
+  }
+}
 export function filterByDiet(value) {
   return {
     type: FILTER_BY_DIET,

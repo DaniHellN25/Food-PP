@@ -1,0 +1,10 @@
+.FavoriteWrapper{
+    background-color: #f5d030;
+    background-image: linear-gradient(100deg, #f5d030 0%, #f53803 74%);
+    margin-left: auto;
+        margin-right: auto;
+    background-size:cover ;
+    overflow: hidden;
+    min-height: 100vh;
+    min-width: 100vh;
+}

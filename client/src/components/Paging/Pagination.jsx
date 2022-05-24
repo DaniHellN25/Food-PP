@@ -1,4 +1,7 @@
+import './Paging.css'
+
 const Pagination = ({
+  
   recipesPerPage,
   allRecipes,
   paginate,

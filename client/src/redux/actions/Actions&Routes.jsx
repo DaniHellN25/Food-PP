@@ -8,15 +8,15 @@ export const CREATE_RECIPE = 'CREATE_RECIPE';
 
 
 /////////FILTERS
-// export const ORDER_A_Z = 'ORDER_A_Z'
-// export const ORDER_Z_A = 'ORDER_Z_A'
+
 
 export const FILTER_BY_DIET = 'FILTER_BY_DIET'
 export const ORDER_BY_NAME = 'ORDER_BY_SCORE_NAME'
 export const ORDER_BY_SCORE = 'ORDER_BY_SCORE'
 export const CLEAR = 'CLEAR'
-// export const ORDER_BY_MIN = 'ORDER_BY_SCORE_MIN'
-// export const ORDER_BY_MAX = 'ORDER_BY_SCORE_MAX'
+export const ADD_FAVORITE = 'ADD_FAVORITE'
+export const REMOVE_FAVORITE = 'REMOVE_FAVORITE'
+
 
 
 

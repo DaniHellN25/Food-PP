@@ -1,0 +1,13 @@
+.btn-pagination {
+    color: blue
+}
+.current {
+    color: white;
+    height: 30px;
+    width: 30px;
+    background-image: url(https://c.tenor.com/IyAbywgqGwsAAAAC/portal-blender.gif);
+    background-position: center;
+    background-size: cover;
+    opacity: 5;
+    border-radius: 10rem;
+}
