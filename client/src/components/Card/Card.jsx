@@ -11,7 +11,7 @@ export default function Card(props) {
         <h1>{props.title}</h1>
       </div>
       <div className='imgCardDiv'>
-    <img className='imgCard' src={props.image} alt="Huh... something weird happen... Have you seen my image?🤔🤨😅" />
+    <img className='imgCard' src={props.image} alt="" />
       </div>
       </div>
       <div>

@@ -1,0 +1,58 @@
+
+
+.wrapperCreation{
+    background-color: #fc89ac;
+    background-image: linear-gradient(315deg, #fc89ac 0%, #b86d29 74%);
+margin-left: auto;
+    margin-right: auto;
+background-size:cover ;
+overflow: hidden;
+min-height: 100vh;
+min-width: 100vh;
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+align-content: space-between;
+justify-content: space-around;
+}
+
+.Form{
+    display: flex;
+    justify-content:space-around;
+    flex-direction: column;
+}
+
+.CheckboxD{
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    grid-gap: 10px;
+}
+
+.btnCreate{
+    background-image: url(https://c.tenor.com/IyAbywgqGwsAAAAC/portal-blender.gif);
+    background-position: center;
+    background-size: cover;
+    opacity: .30;
+    border-radius: 10rem;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    margin: 0.5rem auto;
+    padding: 0.75rem 2.5rem;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    text-orientation: sideways-right;
+    color: white;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+   border-color: transparent;
+    border-radius: 100rem;
+    margin-left: 70px;
+}
+.btnCreate:hover{
+    transform: scale(120%);
+    opacity: 1;
+    cursor: pointer;
+    
+   }

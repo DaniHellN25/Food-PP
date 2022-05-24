@@ -1,4 +1,4 @@
-.wrapperHome{
+.wrapperDiet{
     background-color: #f5d030;
 background-image: linear-gradient(100deg, #f5d030 0%, #f53803 74%);
 margin-left: auto;
@@ -15,24 +15,10 @@ min-width: 100vh;
   
     
 }
-.Pagination{
-     display: flex;
-   
-   
-}
 
 
-.Video-NavBar{
-    display: flex;
-    align-content: center;
-    align-items: center;
-    flex-direction: row;
-   margin-left: 0;
-    box-shadow: 0 30px 40px 40px rgba(0,0,0,.1);
-}
-
-.recipesCards{
-    
+.DietCards{
+        
     display: grid;
     grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(1, 1fr);
@@ -40,5 +26,3 @@ min-width: 100vh;
   overflow: hidden; 
   min-width: 0; 
 }
-
-

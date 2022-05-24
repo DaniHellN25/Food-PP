@@ -78,7 +78,8 @@ const Home = ({active}) => {
                 currentPage={currentPage}
               />
               </div>
-            <div className="Cards">
+              <div className="gridCards">
+              <div className="Cards">
             {currentRecipes ? (
                 <div className="recipesCards">
                   {currentRecipes?.map((e) => {
@@ -101,6 +102,8 @@ const Home = ({active}) => {
                 <h1>404</h1>
               )}
             </div>
+              </div>
+          
             </div>
           </div>
         </div>
