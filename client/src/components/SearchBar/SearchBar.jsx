@@ -14,7 +14,7 @@ const Search = ({active}) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(searchByName(name)); //dispatch of the name
+    dispatch(searchByName(name));
     setName("");
   }
 

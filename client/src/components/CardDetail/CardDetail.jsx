@@ -102,7 +102,7 @@ const CardDetail = () => {
                         : "No data found"}</p>
                   </>
                   <>
-                    <h3>Rating</h3>
+                    <h3>spoonacularScore</h3>
                     <p>
                       {detail.spoonacularScore
                         ? `${detail.spoonacularScore} spoonacularScore`

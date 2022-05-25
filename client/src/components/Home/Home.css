@@ -31,14 +31,22 @@ min-width: 100vh;
     box-shadow: 0 30px 40px 40px rgba(0,0,0,.1);
 }
 
+.Cards{
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
 .recipesCards{
     
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(1, 1fr);
-  grid-gap: 5px;
-  overflow: hidden; 
+  display: grid;
+  grid-template-columns: repeat( auto-fit, minmax(min(500px, 100%), 1fr));
+  grid-gap:1rem;
+
   min-width: 0; 
+
 }
 
+.recipesCards:hover{
+transform: 150%;
+}
 

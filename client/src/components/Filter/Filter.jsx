@@ -24,8 +24,7 @@ const Filter = ({ setRating, setOrder }) => {
   return (
     <div><label >Order by name</label>
       <select onChange={(e) => handlerOrderByName(e)}>
-        <option value="A to Z">A to Z</option>{" "}
-        {/* value to be able to send things by payload*/}
+        <option value="A to Z">A to Z</option>
         <option value="Z to A">Z to A</option>
       </select>
       <label >Order by healthScore</label>

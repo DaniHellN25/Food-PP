@@ -37,7 +37,7 @@ const Home = () => {
     setCurrentPage(pageNumber);
   };
 
-  // Handlers
+  // Handler
   function handleClick(e) {
     e.preventDefault();
     dispatch(getAll());
@@ -99,7 +99,7 @@ const Home = () => {
                   })}
                 </div>
               ) : (
-                <h1>404</h1>
+                <h1>Food's not ready yet</h1>
               )}
             </div>
               </div>

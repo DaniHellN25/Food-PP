@@ -5,13 +5,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { getDiets, postRecipe } from "../../redux/actions";
 import NavBar from "../NavBar/NavBar";
 import './RecipeCreation.css'
-let regexImg = /(https?:\/\/.*\.(?:png|jpg|svg))/i;
+ let regexURL = /^(https?:\/\/[a-zA-Z0-9_+%-]+(\.[a-zA-Z0-9+\_%-]+)*(:[0-9]{1,5})?(\/[a-zA-Z0-9+()?#~=&\._%-]*)*)?$/
+let regexText = /\w\s/
 function validateInput(input) {
   let errors = {};
 
-  if (!input.title || !/([a-zA-Z])\w+/g.test(input.title)) {
+  if (!input.title || !regexText.test(input.title) || input.title.length > 60) {
     errors.title =
-      "Don't have any ideas? It's ok, something descriptive should work or not... take mexican 'mole' as an example 😅 and remember the name should not be more than 60 characters";
+      "Don't have any ideas? It's ok, something descriptive should work or not... take mexican 'mole' as an example 😅 and remember the name should not be more than 60 characters, and no special characters are allowed, numbers are tho...";
   }
   if (input.spoonacularScore < 0 || input.spoonacularScore > 100) {
     errors.spoonacularScore = "Rating must be between 0 and 100";
@@ -24,8 +25,8 @@ function validateInput(input) {
       "Brief dish description... still without any ideas, huh? Can we suggest you something like 'It tastes like something you've never had before'? 😉";
   }
 
-  if (!input.image.length  || regexImg.test(input.image) === false) {
-    errors.image = `Feel free to leave this default image or add a new one. For now we only take free stock photos you can find online(You know copy can be a bummer sometimes but,  hey! Let's respect other people's creative properties 😉). We are working on our servers to let you add your own photos. In the meanwhile... visit this page to get really good photos https://www.pexels.com/es-es/  
+  if (!input.image.length || input.image.length > 300 || regexURL.test(input.image) === false) {
+    errors.image = `Links with HTTPS protocol is a must here AND... Feel free to leave this default image or add a new one. For now we only take free stock photos you can find online(You know copy can be a bummer sometimes but,  hey! Let's respect other people's creative properties 😉). We are working on our servers to let you add your own photos. In the meanwhile... visit this page to get really good photos https://www.pexels.com/es-es/  
     We'll like you to remember you that you can actually donate to the author of the photo you choose😉`;
   }
   if (!input.analyzedInstructions.length) {
@@ -73,9 +74,9 @@ export default function RecipeCreation() {
       recipe.title &&
       recipe.summary &&
       recipe.spoonacularScore > 0 &&
-      recipe.spoonacularScore < 100 &&
+      recipe.spoonacularScore <= 100 &&
       recipe.healthScore > 0 &&
-      recipe.healthScore < 100 && 
+      recipe.healthScore <= 100 && 
       recipe.analyzedInstructions.length &&
       recipe.diets.length  &&
       recipe.image.length > 50  
@@ -93,7 +94,7 @@ export default function RecipeCreation() {
         diets: [],
       });
     } else {
-      alert(`All fields must be fulfilled`);
+      alert(`All fields must be fulfilled correctly`);
     }
   }
 
