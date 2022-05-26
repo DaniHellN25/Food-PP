@@ -18,7 +18,7 @@ const Filter = ({ setRating, setOrder }) => {
   function handlerOrderByRating(e) {
     e.preventDefault();
     dispatch(orderByRating(e.target.value)); // dispatch
-    setRating(`Rating ${e.target.value}`); // when i set the page, the local state is modified and rendered
+    setRating(`Rating ${e.target.value}`); // when setted page, the local state is modified and rendered
   }
 
   return (

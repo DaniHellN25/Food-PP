@@ -1,7 +1,7 @@
 
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addFavoriteRecipe, clear, getById, removeFavoriteRecipes } from "../../redux/actions";
 import NavBar from "../NavBar/NavBar";
@@ -127,8 +127,12 @@ const CardDetail = () => {
                   
                     <h3>Instructions</h3>
                     <p>
-                      {detail.analyzedInstructions
-                        ? detail.analyzedInstructions
+                    {detail.analyzedInstructions
+                        ?  Array.isArray(detail.analyzedInstructions) ? detail.analyzedInstructions?.map((e)=>{
+                          return (
+                            <h4>{e}</h4>
+                          )
+                        }) : detail.analyzedInstructions
                         : "No steps were found. Time to experiment a little I guess 👩‍🍳👩‍🍳"}
                     </p>
                     <>

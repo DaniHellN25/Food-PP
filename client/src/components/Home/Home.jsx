@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Pagination from "../Paging/Pagination";
@@ -30,8 +30,8 @@ const Home = () => {
   const currentRecipes = allRecipes.slice(iOfFirstRecipe, iOfLastRecipe);
 
   // Local states for filters
-  const [, setOrder] = useState("");
-  const [, setRating] = useState("");
+  const [, setOrder] = useState('')
+  const [, setRating] = useState('')
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
