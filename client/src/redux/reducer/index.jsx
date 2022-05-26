@@ -70,7 +70,7 @@ export default function rootReducer(state = initialState, { type, payload }) {
           : filterRecipes.filter((r) => r.diets.includes(payload));
       return {
         ...state,
-        recipes: dietsFilter,
+        recipes: dietsFilter
       };
     case ORDER_BY_NAME:
       let orderBy =

@@ -1,7 +1,6 @@
 import './Paging.css'
 
-const Pagination = ({
-  
+const Pagination = ({ 
   recipesPerPage,
   allRecipes,
   paginate,
@@ -30,7 +29,7 @@ const Pagination = ({
             >
               &#x2190;
             </button>
-            {pageNumber && //render each number
+            {pageNumber.length ? //render each number
               pageNumber.map((number) => (
                 <li className="list" key={number}>
                   <button
@@ -40,7 +39,7 @@ const Pagination = ({
                     {number}
                   </button>
                 </li>
-              ))}
+              )) : <h1>It looks like we don't have those recipes yet</h1>}
             <button
               disabled={
                 maxQuantity === currentPage || maxQuantity < currentPage //Last page

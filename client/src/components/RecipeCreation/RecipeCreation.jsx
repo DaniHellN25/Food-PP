@@ -6,23 +6,23 @@ import { getDiets, postRecipe } from "../../redux/actions";
 import NavBar from "../NavBar/NavBar";
 import './RecipeCreation.css'
  let regexURL = /^(https?:\/\/[a-zA-Z0-9_+%-]+(\.[a-zA-Z0-9+\_%-]+)*(:[0-9]{1,5})?(\/[a-zA-Z0-9+()?#~=&\._%-]*)*)?$/
-let regexText = /\w\s/
+let regexText = /^[A-Za-z]+$/
 function validateInput(input) {
   let errors = {};
 
   if (!input.title || !regexText.test(input.title) || input.title.length > 60) {
     errors.title =
-      "Don't have any ideas? It's ok, something descriptive should work or not... take mexican 'mole' as an example 😅 and remember the name should not be more than 60 characters, and no special characters are allowed, numbers are tho...";
+      "Only letters from A to Z are allowed. Don't have any ideas? It's ok, something descriptive should work or not... take mexican 'mole' as an example 😅 and remember the name should not be more than 60 characters, and no special characters are allowed, numbers are tho...";
   }
   if (input.spoonacularScore < 0 || input.spoonacularScore > 100) {
-    errors.spoonacularScore = "Rating must be between 0 and 100";
+    errors.spoonacularScore = "spoonacularScore must be between 0 and 100";
   }
   if (input.healthScore < 0 || input.healthScore > 100) {
-    errors.healthScore = "The health level must be between 0 and 100.";
+    errors.healthScore = "The healthScore must be between 0 and 100.";
   }
-  if (!input.summary) {
+  if (!input.summary  || !regexText.test(input.summary))  {
     errors.summary =
-      "Brief dish description... still without any ideas, huh? Can we suggest you something like 'It tastes like something you've never had before'? 😉";
+      "Only letters from A to Z are allowed. Brief dish description... still without any ideas, huh? Can we suggest you something like 'It tastes like something you've never had before'? 😉";
   }
 
   if (!input.image.length || input.image.length > 300 || regexURL.test(input.image) === false) {
@@ -71,15 +71,15 @@ export default function RecipeCreation() {
     e.preventDefault();
     setErrors(validateInput(recipe));
     if (
-      recipe.title &&
-      recipe.summary &&
+      recipe.title && regexText.test(recipe.title)  &&
+      recipe.summary && regexText.test(recipe.summary) &&
       recipe.spoonacularScore > 0 &&
       recipe.spoonacularScore <= 100 &&
       recipe.healthScore > 0 &&
       recipe.healthScore <= 100 && 
       recipe.analyzedInstructions.length &&
       recipe.diets.length  &&
-      recipe.image.length > 50  
+      recipe.image.length > 50  && regexURL.test(recipe.image)
     ) {
       dispatch(postRecipe(recipe));
       alert(`Recipe cooked! Ready to be served at home 😉`);

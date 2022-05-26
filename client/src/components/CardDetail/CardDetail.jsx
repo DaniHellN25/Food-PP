@@ -124,6 +124,7 @@ const CardDetail = () => {
                         : "No data found"}
                     </p>
                   </>
+                  
                     <h3>Instructions</h3>
                     <p>
                       {detail.analyzedInstructions
