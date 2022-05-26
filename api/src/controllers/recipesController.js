@@ -12,7 +12,7 @@ const getAllrecipes = async (req, res, next) => {
   if (req.query.name) return next();
   try {
     const api = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY6}&addRecipeInformation=true&number=100`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`
     );
     const db = await Recipe.findAll({
       include: {
@@ -74,7 +74,7 @@ const getRecipeByName = async (req, res, next) => {
   const lowerCaseQueryName = name.toLowerCase();
   try {
     const api = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY6}&addRecipeInformation=true&number=100`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`
     );
     const db = await Recipe.findAll({
       where: {
@@ -189,7 +189,7 @@ const getRecipeById = async (req, res, next) => {
           );
     } else if (regexExpNum(id)) {
       const api = await axios.get(
-        `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY6}`
+        `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
       );
       const { data } = api;
       let apiResponse = (() => {
