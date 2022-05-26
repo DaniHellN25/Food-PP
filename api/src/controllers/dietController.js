@@ -1,14 +1,14 @@
 const { Diet } = require("../db.js");
 const axios = require("axios");
 const {
-  API_KEY, API_KEY2, API_KEY3, API_KEY4
+  API_KEY, API_KEY2, API_KEY3, API_KEY4, API_KEY5
 } = process.env;
 
 //mapeo todos los resultaos de la busqueda para obtener solo los tipo de dieta de cada uno, obtengo un arreglo de objetos y por cada  elemento en la propiedad diets checo si estan en mi var para pushearlos. Ya filtradas solo queda checar si estan en la BD o crearlos
 const getTypes = async (req, res, next) => {
   try {
     const api = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=40`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY5}&addRecipeInformation=true&number=40`
     );
     if (api) {
       let apiResponseTypes = [];

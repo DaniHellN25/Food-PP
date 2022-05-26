@@ -1,6 +1,6 @@
 const { Recipe, Diet } = require("../db.js");
 const axios = require("axios");
-const { API_KEY, API_KEY2, API_KEY3, API_KEY4} = process.env;
+const { API_KEY, API_KEY2, API_KEY3, API_KEY4, API_KEY5} = process.env;
 
 const { Op } = require("sequelize");
 function removeTags(str){
@@ -12,7 +12,7 @@ const getAllrecipes = async (req, res, next) => {
   if (req.query.name) return next();
   try {
     const api = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY5}&addRecipeInformation=true&number=100`
     );
     const db = await Recipe.findAll({
       include: {
@@ -74,7 +74,7 @@ const getRecipeByName = async (req, res, next) => {
   const lowerCaseQueryName = name.toLowerCase();
   try {
     const api = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY5}&addRecipeInformation=true&number=100`
     );
     const db = await Recipe.findAll({
       where: {
@@ -189,7 +189,7 @@ const getRecipeById = async (req, res, next) => {
           );
     } else if (regexExpNum(id)) {
       const api = await axios.get(
-        `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
+        `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY5}`
       );
       const { data } = api;
       let apiResponse = (() => {
@@ -198,6 +198,7 @@ const getRecipeById = async (req, res, next) => {
           vegan: data.vegan,
           glutenFree: data.glutenFree,
           image: data.image,
+          id: data.id,
           title: data.title,
           dishTypes: data.dishTypes.map((e)=> e.split(' ').map((e) => e.charAt(0).toUpperCase() + e.slice(1))
           .join(" ")).join().replace(/,/g, ', '),
@@ -210,7 +211,6 @@ const getRecipeById = async (req, res, next) => {
             .map((step) => {
               return `${step.number}.  ${step.step}`;
             })
-            .join(),
         };
       })(data);
       return res.send(apiResponse);
