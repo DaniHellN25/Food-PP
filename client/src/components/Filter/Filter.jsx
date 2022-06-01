@@ -1,12 +1,14 @@
 import React from "react";
 import { filterByDiet, orderByName, orderByRating } from "../../redux/actions/index.jsx";
 import { useDispatch} from "react-redux";
-const Filter = ({ setRating, setOrder }) => {
+const Filter = ({ setCurrentPage,setRating, setOrder }) => {
   const dispatch = useDispatch();
+  
 
   function handlerFilterByDiet(e) {
     e.preventDefault();
     dispatch(filterByDiet(e.target.value));
+    setCurrentPage(1)
   }
 
   function handlerOrderByName(e) {

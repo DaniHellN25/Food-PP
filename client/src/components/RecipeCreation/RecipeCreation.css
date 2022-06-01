@@ -62,3 +62,33 @@ justify-content: space-around;
    flex-direction: column;
    width: 80%;
 }   
+.inputCreate {
+    transition: width 0.4s ease-in-out;
+    background-color: #ff4e00;
+background-image: linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);
+
+    width: 25%;
+    height: 45px;
+}
+
+.inputCreate:focus{
+    width: 50%;
+}
+
+.inputSteps{
+    width: 50%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #ff4e00;
+    background-image: linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);
+    resize: none;
+}
+.inputScore{
+    background-color: #ff4e00;
+    background-image: linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);
+    width: 10%;
+    height: 45px;
+}

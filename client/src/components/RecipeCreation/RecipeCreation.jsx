@@ -137,7 +137,7 @@ export default function RecipeCreation() {
             <h1>Here you can add your own Recipe</h1>
       <form className="Form">
         <label>Title</label>
-        <input
+        <input className="inputCreate"
           type="text"
           name="title"
           value={recipe.title}
@@ -145,10 +145,10 @@ export default function RecipeCreation() {
         />
         {errors.title && <p style={{ color: "blue" }}> {errors.title}</p>}
         <label>Summary:</label>
-        <input name="summary" value={recipe.summary} onChange={handleChange} />
+        <input className="inputCreate" name="summary" value={recipe.summary} onChange={handleChange} />
         {errors.summary && <p style={{ color: "blue" }}> {errors.summary}</p>}
         <label>spoonacularScore:</label>
-        <input
+        <input className="inputScore"
           type="number"
           min="1"
           max="100"
@@ -160,7 +160,7 @@ export default function RecipeCreation() {
           <p style={{ color: "blue" }}> {errors.spoonacularScore}</p>
         )}
         <label>healthScore:</label>
-        <input
+        <input className="inputScore"
           type="number"
           min="1"
           max="100"
@@ -172,10 +172,10 @@ export default function RecipeCreation() {
           <p style={{ color: "blue" }}>{errors.healthScore}</p>
         )}
         <label>Image or photo:</label>
-        <input type="url" name="image" value={recipe.image} onChange={handleChange} />
+        <input className="inputCreate" type="url" name="image" value={recipe.image} onChange={handleChange} />
         {errors.image && <p style={{ color: "blue" }}>{errors.image}</p>}
         <label>Steps:</label>
-        <input
+        <textarea className="inputSteps"
           name="analyzedInstructions"
           value={recipe.analyzedInstructions}
           onChange={handleChange}
@@ -187,7 +187,7 @@ export default function RecipeCreation() {
                 {stateDiets.map((d) => (
                   <label key={d.id}>
                     <p>{d.name}</p>
-                    <input
+                    <input className="inputCheckBox"
                       onChange={handleCheck}
                       type="checkbox"
                       name={d.name}
@@ -205,7 +205,8 @@ export default function RecipeCreation() {
       <div>
         <button className="btnCreate" type="submit" onClick={handleSubmit}> Send to the kitchen 👨‍🍳👩‍🍳
         </button>
-      <button className="btnCreate" onClick={handleReload}>Cancel</button>
+        {recipe.diets.length ? <button className="btnCreate" onClick={handleReload}>Cancel</button> : '' }
+  
       </div>
     </div>
   );
