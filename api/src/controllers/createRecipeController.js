@@ -11,6 +11,7 @@ const createRecipe = (req, res, next) => {
     analyzedInstructions,
     diets,
   } = req.body;
+  //If the recipe is exactly the same it wont be created
   let newRecipe, foundTypes;
   Recipe.findOrCreate({
     where: {

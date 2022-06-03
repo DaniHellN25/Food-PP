@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const {getRecipeByName, getRecipeById, getAllrecipes } = require('../controllers/recipesController.js');
+const {getRecipeByName, getRecipeById, getAllrecipes, getHealthyRecipes} = require('../controllers/recipesController.js');
 
 const recipeRouter = Router();
 
@@ -8,6 +8,7 @@ const recipeRouter = Router();
 recipeRouter.get('/', getAllrecipes)
 recipeRouter.get('/', getRecipeByName)
 recipeRouter.get('/:id', getRecipeById)
+recipeRouter.get('/healthy/75', getHealthyRecipes)
 // Ejemplo: router.use('/auth', authRouter);
 
 

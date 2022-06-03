@@ -12,7 +12,7 @@ const getAllrecipes = async (req, res, next) => {
   if (req.query.name) return next();
   try {
     const api = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY2}&addRecipeInformation=true&number=100`
     );
     const db = await Recipe.findAll({
       include: {
@@ -46,6 +46,7 @@ const getAllrecipes = async (req, res, next) => {
           id: recipe.id,
           image: recipe.image,
           title: recipe.title,
+          //Para dejar bonito el output
           diets: recipe.diets.map((e)=> e.split(' ').map((e) => e.charAt(0).toUpperCase() + e.slice(1))
           .join(" ")).join().replace(/,/g, ', '),
           dishTypes: recipe.dishTypes.map((e)=> e.split(' ').map((e) => e.charAt(0).toUpperCase() + e.slice(1))
@@ -61,20 +62,34 @@ const getAllrecipes = async (req, res, next) => {
     }
   } catch (error) {
     console.error(error)
-    // return res
-    //   .status(404).send(
-    //     // `We might have a problem in the kitchen  👩‍🍳👨‍🍳, we offer you our most sincere apologies.  We like you, have a cupcake🧁`
-    //     error
-    //   );
   }
 };
+
+
+const getHealthyRecipes = async (req, res, next) => {
+ 
+ try {
+  const recipesForFilter = await getAllrecipes()
+  console.log(recipesForFilter)
+  // const filter = recipesForFilter.filter((e)=>{
+  //   return e.healthScore >= 75
+  // })
+  res.send('hola')
+ } catch (error) {
+   console.error(error)
+ }
+
+}
+
+
+
 
 const getRecipeByName = async (req, res, next) => {
   const { name } = req.query;
   const lowerCaseQueryName = name.toLowerCase();
   try {
     const api = await axios.get(
-      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`
+      `https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY2}&addRecipeInformation=true&number=100`
     );
     const db = await Recipe.findAll({
       where: {
@@ -189,7 +204,7 @@ const getRecipeById = async (req, res, next) => {
           );
     } else if (regexExpNum(id)) {
       const api = await axios.get(
-        `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`
+        `https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY2}`
       );
       const { data } = api;
       let apiResponse = (() => {
@@ -227,6 +242,7 @@ module.exports = {
   getAllrecipes,
   getRecipeByName,
   getRecipeById,
+  getHealthyRecipes
 };
 // [ ] Los campos mostrados en la ruta principal para cada receta (imagen, nombre, tipo de plato y tipo de dieta)
 // [ ] Resumen del plato
