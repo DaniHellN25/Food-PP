@@ -1,8 +1,9 @@
 
 
 .wrapperCreation{
-    background-color: #fc89ac;
-    background-image: linear-gradient(315deg, #fc89ac 0%, #b86d29 74%);
+    background-color: #a40606;
+    background-image: linear-gradient(315deg, #a40606 0%, #d98324 74%);
+    
 margin-left: auto;
     margin-right: auto;
 background-size:cover ;
@@ -27,7 +28,10 @@ justify-content: space-around;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(1, 1fr);
     grid-gap: 10px;
+    
 }
+
+
 
 .btnCreate{
     background-image: url(https://c.tenor.com/IyAbywgqGwsAAAAC/portal-blender.gif);
@@ -49,6 +53,7 @@ justify-content: space-around;
    border-color: transparent;
     border-radius: 100rem;
     margin-left: 70px;
+    
 }
 .btnCreate:hover{
     transform: scale(120%);
@@ -91,4 +96,25 @@ background-image: linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);
     background-image: linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);
     width: 10%;
     height: 45px;
+    font-weight: bold;
+}
+
+.CheckboxD{
+    background-color: #ff4e00;
+    background-image: linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);
+
+}
+
+.checkText{
+    font-weight: bold;
+}
+
+.inputCheckBox{
+    cursor: pointer;
+}
+.labelCreate{
+    font-weight: bold;
+}
+.divButton{
+    margin-top: 41px;
 }

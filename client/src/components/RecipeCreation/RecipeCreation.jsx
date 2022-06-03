@@ -136,7 +136,7 @@ export default function RecipeCreation() {
             <div className="section-create">
             <h1>Here you can add your own Recipe</h1>
       <form className="Form">
-        <label>Title</label>
+        <label className="labelCreate">Title:</label>
         <input className="inputCreate"
           type="text"
           name="title"
@@ -144,10 +144,10 @@ export default function RecipeCreation() {
           onChange={handleChange}
         />
         {errors.title && <p style={{ color: "blue" }}> {errors.title}</p>}
-        <label>Summary:</label>
+        <label className="labelCreate">Summary:</label>
         <input className="inputCreate" name="summary" value={recipe.summary} onChange={handleChange} />
         {errors.summary && <p style={{ color: "blue" }}> {errors.summary}</p>}
-        <label>spoonacularScore:</label>
+        <label className="labelCreate">spoonacularScore:</label>
         <input className="inputScore"
           type="number"
           min="1"
@@ -159,7 +159,7 @@ export default function RecipeCreation() {
         {errors.spoonacularScore && (
           <p style={{ color: "blue" }}> {errors.spoonacularScore}</p>
         )}
-        <label>healthScore:</label>
+        <label className="labelCreate">healthScore:</label>
         <input className="inputScore"
           type="number"
           min="1"
@@ -171,22 +171,22 @@ export default function RecipeCreation() {
         {errors.healthScore && (
           <p style={{ color: "blue" }}>{errors.healthScore}</p>
         )}
-        <label>Image or photo:</label>
+        <label className="labelCreate">Image or photo:</label>
         <input className="inputCreate" type="url" name="image" value={recipe.image} onChange={handleChange} />
         {errors.image && <p style={{ color: "blue" }}>{errors.image}</p>}
-        <label>Steps:</label>
+        <label className="labelCreate">Steps:</label>
         <textarea className="inputSteps"
           name="analyzedInstructions"
           value={recipe.analyzedInstructions}
           onChange={handleChange}
         />
         {errors.analyzedInstructions && <p style={{ color: "blue" }}> {errors.analyzedInstructions}</p>}
-        <label>Diets</label>
+        <label className="labelCreate">Diets</label>
         {stateDiets ? (
               <div className="CheckboxD">
                 {stateDiets.map((d) => (
-                  <label key={d.id}>
-                    <p>{d.name}</p>
+                  <label className="labelCreate" key={d.id}>
+                    <p className="checkText">{d.name}</p>
                     <input className="inputCheckBox"
                       onChange={handleCheck}
                       type="checkbox"
@@ -202,7 +202,7 @@ export default function RecipeCreation() {
       </form>
             </div>
       
-      <div>
+      <div className="divButton">
         <button className="btnCreate" type="submit" onClick={handleSubmit}> Send to the kitchen 👨‍🍳👩‍🍳
         </button>
         {recipe.diets.length ? <button className="btnCreate" onClick={handleReload}>Cancel</button> : '' }
