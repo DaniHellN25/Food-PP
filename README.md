@@ -40,13 +40,14 @@ LINK: https://recipes-app-teal.vercel.app
 ---
 
 ### Project screens
-![image](/resources/Landing.png)
-![image](./resources/Landinghoverbutton.png)
-![image](./resources/Loader.png)
-![image](./resources/Home.png)
-![image](./resources/Detail.png)
-![image](./resources/404.png)
-![image](./resources/Your%20Cookbook.png)
-![image](./resources/Recipe%20Creation.png)
-![image](./resources/Recipe%20Creation%202.png)
-![image](./resources//Diet%20Types.png)
+
+![image](/client/resources/Landing.png)
+![image](/client/resources/Landinghoverbutton.png)
+![image](/client/resources/Loader.png)
+![image](/client/resources/Home.png)
+![image](/client/resources/Detail.png)
+![image](/client/resources/404.png)
+![image](/client/resources/Your%20Cookbook.png)
+![image](/client/resources/Recipe%20Creation.png)
+![image](/client/resources/Recipe%20Creation%202.png)
+![image](/client/resources//Diet%20Types.png)
